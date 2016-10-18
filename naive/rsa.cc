@@ -5,7 +5,7 @@
 #include <linux/random.h>
 
 #include "rsa.h"
-// For fast arbitrary precision arithmetic.
+// For fast arbitrary-precision arithmetic.
 #include <gmpxx.h>
 #include <gmp.h>
 
@@ -50,7 +50,7 @@ void FillPrimes(RsaVariables *state) {
 
 	// Get two 512 bit primes seeded from the current clock time.
 	rr.seed(time(NULL));
-	ran = rr.get_z_bits(512);
+	ran = rr.get_z_bits(512);  // This is short enough for a brute-force attack.
 	mpz_nextprime(candidate_prime, ran.get_mpz_t());
 	mpz_set(state->p, candidate_prime);
 	ran = rr.get_z_bits(512);
@@ -63,7 +63,7 @@ void FillConstants(RsaVariables *state) {
 	mpz_t temp2;
 	mpz_init(temp1);
 	mpz_init(temp2);
-	// Set the modulus.
+	// Set the modulus.  |n| = |p| + |q|
 	mpz_init(state->n);
 	mpz_mul(state->n, state->p, state->q);
 	// Set the totient
@@ -72,7 +72,7 @@ void FillConstants(RsaVariables *state) {
 	mpz_sub_ui(temp2, state->q, 1);
 	mpz_mul(state->totient, temp1, temp2);
 
-	// Set the public exponent.
+	// Set the public exponent.  Common choices are 3 and 65537.
 	mpz_init_set_str(state->e, "65537", 0); // That was easy...
 	// Set the private exponent.
 	mpz_t s;
