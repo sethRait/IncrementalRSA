@@ -6,7 +6,7 @@ int main() {
 	char usr_input[12];
 	char answer[12] = "twelvechars!";
 	gets(usr_input);
-	if (strncmp(usr_input, answer, 10) == 0) {
+	if (strncmp(usr_input, answer, 12) == 0) {
 		can_login = 1;
 	}
 	if (can_login) {
