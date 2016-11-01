@@ -3,8 +3,8 @@
 
 int main() {
 	int can_login = 0;
-	char usr_input[10];
-	char answer[10] = "tenchars10";
+	char usr_input[12];
+	char answer[12] = "twelvechars!";
 	gets(usr_input);
 	if (strncmp(usr_input, answer, 10) == 0) {
 		can_login = 1;
